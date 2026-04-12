@@ -1,0 +1,46 @@
+---
+- name: Deploy Full Monitoring Stack
+  hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Install Docker and Dependencies
+      apt:
+        name: 
+          - docker.io
+          - python3-docker
+        state: present
+        update_cache: yes
+
+    - name: Run Node Exporter (The Sensor)
+      community.docker.docker_container:
+        name: node-exporter
+        image: prom/node-exporter:latest
+        state: started
+        restart_policy: always
+        ports:
+          - "9100:9100"
+
+    - name: Run Prometheus (The Database)
+      community.docker.docker_container:
+        name: prometheus
+        image: prom/prometheus
+        state: started
+        recreate: yes
+        restart_policy: always
+        ports:
+          - "9091:9090"
+        volumes:
+          - "/home/dell/Documents/MK_Labs/Lab2_Monitoring/prometheus.yml:/etc/prometheus/prometheus.yml"
+
+    - name: Run Grafana (The Dashboard)
+      community.docker.docker_container:
+        name: grafana
+        image: grafana/grafana
+        state: started
+        recreate: yes
+        restart_policy: always
+        ports:
+          - "3000:3000"
+
