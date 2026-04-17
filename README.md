@@ -1,21 +1,21 @@
-# 🚀 Lab 2: Automated Infrastructure Monitoring
-Part of my **40-Day Technical Lab Challenge (April 2026)**.
+# 🚀 Lab 2: Automated Infrastructure Observability
 
-## 📋 Overview
-An automated monitoring stack deployed on a **Dell Latitude E7440** running **Xubuntu**. This project uses **Ansible** to orchestrate a containerized environment for real-time hardware observability.
+This project automates the deployment of a complete monitoring and alerting stack on a Linux host (tested on Xubuntu 24.04). Using **Ansible** and **Docker**, it transforms raw hardware data into actionable insights and proactive alerts.
 
-## 🛠️ The Stack
-- **Ansible**: Infrastructure as Code (IaC) for one-click deployment.
-- **Docker**: Containerization of all monitoring services.
-- **Prometheus**: Time-series database for metric collection.
-- **Node Exporter**: Hardware sensor for CPU, RAM, and Disk metrics.
-- **Grafana**: Professional visualization using Dashboard ID 1860.
+## 🏗️ Architecture
+- **Node Exporter**: Collects hardware metrics (CPU, RAM, Disk, Network).
+- **Prometheus**: Time-series database that scrapes and stores metrics.
+- **Alertmanager**: Handles alerts based on custom thresholds (e.g., High CPU usage).
+- **Grafana**: Provides professional visualization (Dashboard ID: 1860).
 
-## 📸 Proof of Concept
-![Grafana Dashboard](link-to-your-screenshot-here)
-*Live monitoring of CPU Load and Memory usage on Xubuntu 24.04.*
+## 🛠️ Tech Stack
+- **Automation**: Ansible (Idempotent Playbooks)
+- **Containerization**: Docker & Docker Compose
+- **OS**: Xubuntu (Dell Latitude E7440)
+- **Language**: YAML / Jinja2
 
-## 🚀 How to Run
-1. Clone this repo.
-2. Ensure Docker and Ansible are installed.
-3. Run: `ansible-playbook -i inventory.ini deploy_monitoring.yml -K`
+## 🚀 One-Click Deployment
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/YOUR_USERNAME/Lab2_Monitoring_Automation.git](https://github.com/YOUR_USERNAME/Lab2_Monitoring_Automation.git)
+   cd Lab2_Monitoring_Automation

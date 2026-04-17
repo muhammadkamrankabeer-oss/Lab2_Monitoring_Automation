@@ -1,48 +1,14 @@
----
-- name: Deploy Full Monitoring & Alerting Stack
-  hosts: localhost
-  connection: local
-  become: yes
-
-  tasks:
-    - name: Run Node Exporter (Sensor)
+- name: Run Load Balancer (The Traffic Cop)
       community.docker.docker_container:
-        name: node-exporter
-        image: prom/node-exporter:latest
-        state: started
-        restart_policy: always
-        ports:
-          - "9100:9100"
-
-    - name: Run Alertmanager (The Router)
-      community.docker.docker_container:
-        name: alertmanager
-        image: prom/alertmanager:latest
-        state: started
-        restart_policy: always
-        ports:
-          - "9093:9093"
-        volumes:
-          - "{{ playbook_dir }}/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
-
-    - name: Run Prometheus (The Brain)
-      community.docker.docker_container:
-        name: prometheus
-        image: prom/prometheus:latest
+        name: load-balancer
+        image: nginx:latest
         state: started
         recreate: yes
         restart_policy: always
+        labels:
+          project: "Lab3_HA"
+          role: "balancer"
         ports:
-          - "9091:9090"
+          - "8080:80"
         volumes:
-          - "{{ playbook_dir }}/prometheus.yml:/etc/prometheus/prometheus.yml"
-          - "{{ playbook_dir }}/alert_rules.yml:/etc/prometheus/alert_rules.yml"
-
-    - name: Run Grafana (The Visuals)
-      community.docker.docker_container:
-        name: grafana
-        image: grafana/grafana:latest
-        state: started
-        restart_policy: always
-        ports:
-          - "3000:3000"
+          - "{{ playbook_dir }}/nginx.conf:/etc/nginx/nginx.conf:ro"
