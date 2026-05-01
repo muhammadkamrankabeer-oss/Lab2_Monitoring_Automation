@@ -1,4 +1,4 @@
-# 🚀 Lab 2: Automated Infrastructure Observability
+# 🚀 Automated Infrastructure Observability
 
 This project automates the deployment of a complete monitoring and alerting stack on a Linux host (tested on Xubuntu 24.04). Using **Ansible** and **Docker**, it transforms raw hardware data into actionable insights and proactive alerts.
 
